@@ -62,6 +62,13 @@ def is_torch_distributed_available() -> bool:
     return _torch_distributed_available
 
 
+def is_xccl_available():
+    # TODO: switch to is_torch_version() once torch 2.7 will be released
+    if version.parse(torch.__version__).release >= version.parse("2.7").release:
+        return torch.distributed.distributed_c10d.is_xccl_available()
+    return False
+
+
 def is_ccl_available():
     try:
         pass
